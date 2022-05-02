@@ -9,28 +9,63 @@ class App extends React.Component {
     this.state = {
     numBlabla: 1,
     BlablaArray: [1],
+    ToDoNumber: 1,
+    TodoList: [],
+    Textvalue: '',
+
     }
   }
 
-  handleClick() {
+  handleClickBlabla() {
     const numero = this.state.numBlabla+1;
-    console.log('aaaaaaaaaaaaaaa' + this.state.BlablaArray);
     this.setState({
     numBlabla: this.state.numBlabla+1,
+    //Try to make BlablaArray update using wrapper functions and spread operator!
     BlablaArray: this.state.BlablaArray.concat(numero),
     })
-    console.log(this.state.BlablaArray)
+  }
+
+  handleChange(event) {
+    this.setState({
+      Textvalue: event.target.value,
+    })
+  }
+  handleSubmit(event) {
+    this.setState ({
+      ToDoNumber: this.state.ToDoNumber+1,
+      TodoList: this.state.TodoList.concat(this.state.Textvalue),
+      Textvalue: '',
+    })
+    alert('An essay was submitted: ' + this.state.Textvalue);
+    console.log(this.event.TodoList);
+    event.preventDefault();
   }
 
   render () {
   return (
     <div>
-    <TextForm />
+    <TextForm handleChange = {(e) => this.handleChange(e)} handleSubmit = {(e) => this.handleSubmit(e)}
+     valuetext = {this.state.Textvalue} />
+    <ToDoList todoarray = {this.state.TodoList}/>
     <Blabla arr = {this.state.BlablaArray}/>
-    <ButtonBlabla onClick = {() => this.handleClick()}/>
+    <ButtonBlabla onClick = {() => this.handleClickBlabla()}/>
     </div>
   );
 }
+}
+
+class ToDoList extends React.Component {
+  render () {
+    const Liste = this.props.todoarray.map ((todo) => {
+      <li key={todo.id}>{todo}</li>
+    });
+    return (<div>
+      <ol>
+        {Liste}
+      </ol>
+    </div>)
+
+  }
 }
 
 class ButtonBlabla extends React.Component {
@@ -42,10 +77,8 @@ class ButtonBlabla extends React.Component {
 
 class Blabla extends React.Component {
   render () {
-    console.log(this.props.arr, Array.isArray(this.props.arr), 'aaaaaaaaaaaaaaasdsadas');
-    const listnumbers = this.props.arr;
-    const listofNumbers = listnumbers.map((number) => 
-      <li key = {number.id}>{number}</li>
+    const listofNumbers = this.props.arr.map((number) => 
+      <li key = {number.toString}>{number}</li>
     );
     return (<div>
       <ol>
@@ -62,10 +95,11 @@ class Blabla extends React.Component {
 class TextForm extends React.Component {
   render () {
       return (
-          <form>
-              <input type='text' placeholder='What do you have to do?'></input>
+          <form onSubmit = {this.props.handleSubmit}>
+              <input type='text' placeholder='What do you have to do?' value = {this.props.valuetext} 
+              onChange = {this.props.handleChange}></input>
               <button className = "button-submit" 
-              onClick = {() => this.props.placeText()}>Submit</button>
+              type = "submit">Submit</button>
           </form>
       );
   }
