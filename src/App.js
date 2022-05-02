@@ -7,24 +7,26 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Trocar numBlabla por um dicionário ou por um array para que eu use map nele no Blabla
-    numBlabla: 0,
+    numBlabla: 1,
+    BlablaArray: [1],
     }
   }
 
   handleClick() {
+    const numero = this.state.numBlabla+1;
+    console.log('aaaaaaaaaaaaaaa' + this.state.BlablaArray);
     this.setState({
-    numBlabla: this.state.numBlabla+1
-    
+    numBlabla: this.state.numBlabla+1,
+    BlablaArray: this.state.BlablaArray.concat(numero),
     })
-    console.log('aaa')
+    console.log(this.state.BlablaArray)
   }
 
   render () {
   return (
     <div>
     <TextForm />
-    <Blabla num = {this.state.numBlabla}/>
+    <Blabla arr = {this.state.BlablaArray}/>
     <ButtonBlabla onClick = {() => this.handleClick()}/>
     </div>
   );
@@ -40,10 +42,15 @@ class ButtonBlabla extends React.Component {
 
 class Blabla extends React.Component {
   render () {
+    console.log(this.props.arr, Array.isArray(this.props.arr), 'aaaaaaaaaaaaaaasdsadas');
+    const listnumbers = this.props.arr;
+    const listofNumbers = listnumbers.map((number) => 
+      <li key = {number.id}>{number}</li>
+    );
     return (<div>
-      aaa
-      
-      {this.props.num}
+      <ol>
+        {listofNumbers}
+      </ol>
 
       </div>
       
