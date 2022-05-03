@@ -7,23 +7,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    numBlabla: 1,
-    BlablaArray: [1],
     ToDoNumber: 1,
     TodoList: [],
     Textvalue: '',
-
     }
   }
 
-  handleClickBlabla() {
-    const numero = this.state.numBlabla+1;
-    this.setState({
-    numBlabla: this.state.numBlabla+1,
-    //Try to make BlablaArray update using wrapper functions and spread operator!
-    BlablaArray: this.state.BlablaArray.concat(numero),
-    })
-  }
 
   handleChange(event) {
     this.setState({
@@ -31,13 +20,14 @@ class App extends React.Component {
     })
   }
   handleSubmit(event) {
+    console.log(this.state.TodoList)
     this.setState ({
       ToDoNumber: this.state.ToDoNumber+1,
       TodoList: this.state.TodoList.concat(this.state.Textvalue),
       Textvalue: '',
     })
-    alert('An essay was submitted: ' + this.state.Textvalue);
-    console.log(this.event.TodoList);
+    //alert('An essay was submitted: ' + this.state.Textvalue);
+    console.log(this.state.TodoList);
     event.preventDefault();
   }
 
@@ -47,8 +37,6 @@ class App extends React.Component {
     <TextForm handleChange = {(e) => this.handleChange(e)} handleSubmit = {(e) => this.handleSubmit(e)}
      valuetext = {this.state.Textvalue} />
     <ToDoList todoarray = {this.state.TodoList}/>
-    <Blabla arr = {this.state.BlablaArray}/>
-    <ButtonBlabla onClick = {() => this.handleClickBlabla()}/>
     </div>
   );
 }
@@ -56,10 +44,12 @@ class App extends React.Component {
 
 class ToDoList extends React.Component {
   render () {
-    const Liste = this.props.todoarray.map ((todo) => {
+    console.log(this.props.todoarray)
+    const Liste = this.props.todoarray.map ((todo) => 
       <li key={todo.id}>{todo}</li>
-    });
-    return (<div>
+    )
+    return (
+    <div>
       <ol>
         {Liste}
       </ol>
@@ -68,28 +58,9 @@ class ToDoList extends React.Component {
   }
 }
 
-class ButtonBlabla extends React.Component {
-  render () {
-    return (
-    <button onClick = {this.props.onClick}> Click Me!!! </button>
-    )}
-}
 
-class Blabla extends React.Component {
-  render () {
-    const listofNumbers = this.props.arr.map((number) => 
-      <li key = {number.toString}>{number}</li>
-    );
-    return (<div>
-      <ol>
-        {listofNumbers}
-      </ol>
 
-      </div>
-      
-    )
-  }
-}
+
 
 
 class TextForm extends React.Component {
