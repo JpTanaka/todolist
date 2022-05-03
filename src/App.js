@@ -31,12 +31,24 @@ class App extends React.Component {
     event.preventDefault();
   }
 
+  handleTodoClick(todo) {
+    const ind = this.state.TodoList.indexOf(todo);
+    var tempTodoList = this.state.TodoList.slice(0);
+    tempTodoList.splice(ind);
+    
+    this.setState ({
+      TodoList: tempTodoList,
+    })
+    console.log(ind, tempTodoList);
+  }
+
   render () {
   return (
     <div>
     <TextForm handleChange = {(e) => this.handleChange(e)} handleSubmit = {(e) => this.handleSubmit(e)}
      valuetext = {this.state.Textvalue} />
-    <ToDoList todoarray = {this.state.TodoList}/>
+    <ToDoList todoarray = {this.state.TodoList} 
+    handleClick = {(todo) => this.handleTodoClick(todo)}/>
     </div>
   );
 }
@@ -45,9 +57,14 @@ class App extends React.Component {
 class ToDoList extends React.Component {
   render () {
     console.log(this.props.todoarray)
-    const Liste = this.props.todoarray.map ((todo) => 
-      <li key={todo.id}>{todo}</li>
-    )
+    const Liste = this.props.todoarray.map ((todo) => {
+      return (
+        <li key={todo.id} className = "todolistitem" value={todo.id}>{todo}
+        <button className='todobutton' 
+        onClick = {() => this.props.handleClick(todo)}>Did it!</button>
+        </li>);
+    }
+    );
     return (
     <div>
       <ol>
