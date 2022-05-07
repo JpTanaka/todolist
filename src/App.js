@@ -1,14 +1,16 @@
 import './App.css';
-import React from 'react';
+import React , { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { FaCheckCircle } from "react-icons/fa"
+
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
     ToDoNumber: 1,
-    TodoList: [],
+    TodoList: ["aaaaaaaaaaaaaadfffffffffffffffffffff", "aaaaaaaadffffffffffsddd"],
     Textvalue: '',
     }
   }
@@ -44,8 +46,9 @@ class App extends React.Component {
 
   render () {
   return (
-    <div>
-    <TextForm handleChange = {(e) => this.handleChange(e)} handleSubmit = {(e) => this.handleSubmit(e)}
+    <div class = "container">
+    <Header />
+    <TextForm class = "forms" handleChange = {(e) => this.handleChange(e)} handleSubmit = {(e) => this.handleSubmit(e)}
      valuetext = {this.state.Textvalue} />
     <ToDoList todoarray = {this.state.TodoList} 
     handleClick = {(todo) => this.handleTodoClick(todo)}/>
@@ -53,8 +56,43 @@ class App extends React.Component {
   );
 }
 }
+function Header () {
+  return (
+    <div className='titlediv'>
+    <h1 className = "title">To-do List <FaCheckCircle /></h1>
+    </div>
+  )
+}
 
-class ToDoList extends React.Component {
+function ToDoList (props) {
+  const Liste = props.todoarray.map ((todo) => {
+    return (
+      <div className="todo-card">
+      <li key={todo.id} className = "todolistitem" value={todo.id}>
+      {todo}
+      </li>
+      
+
+      <div className="buttons">
+<button className='removebutton'
+      onClick = {() => props.handleClick(todo)}>Did it!</button>
+      </div>
+
+      
+      </div>
+      );
+  });
+  return (
+    <div >
+      <ol className='todo-space'>
+        {Liste}
+      </ol>
+    </div>
+  )
+}
+
+
+/*class ToDoList extends React.Component {
   render () {
     console.log(this.props.todoarray)
     const Liste = this.props.todoarray.map ((todo) => {
@@ -73,14 +111,21 @@ class ToDoList extends React.Component {
     </div>)
 
   }
+}*/
+
+
+function TextForm (props) {
+  return (<form class = "forms" onSubmit = {props.handleSubmit}>
+  <input type='text' placeholder='What do you have to do?' className='formbox' value = {props.valuetext} 
+  onChange = {props.handleChange}></input>
+  <button className = "button-submit" 
+  type = "submit">Submit</button>
+</form>)
 }
 
 
 
-
-
-
-class TextForm extends React.Component {
+/*class TextForm extends React.Component {
   render () {
       return (
           <form onSubmit = {this.props.handleSubmit}>
@@ -92,7 +137,7 @@ class TextForm extends React.Component {
       );
   }
 }
-
+*/
 
 export default App;
 const root = ReactDOM.createRoot(document.getElementById("root"));
