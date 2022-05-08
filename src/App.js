@@ -74,7 +74,7 @@ function ToDoList (props) {
       
 
       <div className="buttons">
-<button className='removebutton'
+<button className='button'
       onClick = {() => props.handleClick(todo)}>Did it!</button>
       </div>
 
@@ -118,7 +118,7 @@ function TextForm (props) {
   return (<form class = "forms" onSubmit = {props.handleSubmit}>
   <input type='text' placeholder='What do you have to do?' className='formbox' value = {props.valuetext} 
   onChange = {props.handleChange}></input>
-  <button className = "button-submit" 
+  <button className = "button" 
   type = "submit">Submit</button>
 </form>)
 }
