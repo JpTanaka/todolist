@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
     this.state = {
     ToDoNumber: 1,
-    TodoList: ["aaaaaaaaaaaaaadfffffffffffffffffffff", "aaaaaaaadffffffffffsddd"],
+    TodoList: [],
     Textvalue: '',
     }
   }
